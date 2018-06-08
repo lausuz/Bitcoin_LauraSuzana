@@ -1,56 +1,56 @@
-import React, { Component } from 'react';
-import Navbar from './Navbar';
+import React, { Component } from 'react'; 
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-class Rp extends Component {
+class Rp extends Component 
+{
 
-  state = {
-    input:null,
-    repos: null,
-    seriesName:null,
-  }
-    
+  state = {};
+  
+  componentDidMount()
+  {
+    axios.get('https://blockchain.info/tobtc?currency=USD&value=500').then((ambilData) => 
+    {  
+      console.log(ambilData); 
 
-  onSeriesInputChange = e =>{
-    this.setState({ seriesName:e.target.value});
-    axios.get(`https://blockchain.info/tobtc?currency=USD&value=${e.target.value/14000}`)
-    .then((ambilData) => {  
-      console.log(ambilData);
-      this.setState({
-        hasil: ambilData.data,
+      this.setState(
+        {
+          // Jumlah Bitcoin dengan uang Rp.1
+          bcforrp1 : (ambilData.data)/(500*14000)
         })
-        
-     })
+    })
   }
-    
-    render() {
 
-      const{seriesName} = this.state;
+  klik()
+  {
+   var inputRp = this.refs.input.value ;
+   var output = (inputRp * this.state.bcforrp1);
+   var outputRound = output.toFixed(6)
+   this.setState(
+    {
+      userInput : inputRp,
+      result : outputRound
+    })
+  }
+  render() 
 
-     return (
-
-        <div>
-          <Navbar/>
+  {
+    return (
+      <div>
         <center>
-          <br/>
-          <h3>Konversi Rupiah ke Bitcoin </h3>
-            <h5>Kurs 1 USD = 14.000 IDR</h5>
-            
-          <br/>
-          <input value = {seriesName} type="number" onInput={this.onSeriesInputChange} style={{width:'400px'}}/>
-          <br/>
-          { this.state.seriesName ? <h4>Rp {seriesName} &nbsp; BTC {this.state.hasil}</h4> :
-          <div>
-          <br/> 
-          <h4>Silakan input nominal Rupiah</h4> 
-          </div>}
-
-        </center>
-
-        </div>
-        );
-       }
-     }
-    
-
-export default Rp;
+          <h1>Konversi Rupiah ke Bitcoin</h1>
+          <h4>Kurs 1 USD = Rp 14.000</h4>
+          <br />
+          <input ref="input" type="number" onInput={()=>{this.klik();}}/>
+          <h1>Rp {this.state.userInput} = BTC {this.state.result}</h1>
+      
+        <br/><br/>
+          <br />
+          <Link to = "/tabelhargabitcoin">Tabel Harga Bitcoin</Link>
+          <br />
+          <Link to = "/konversibitcoinkerupiah">Konversi Bitcoin ke Rupiah</Link>
+          </center>
+      </div>
+  );
+  }
+  } export default Rp;

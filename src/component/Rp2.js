@@ -1,56 +1,56 @@
-import React, { Component } from 'react';
-import Navbar from './Navbar';
+import React, { Component } from 'react'; 
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-class Rp2 extends Component {
+class Rp2 extends Component 
+{
 
-  state = {
-    input:null,
-    repos:null,
-    masuk:null,
-  }
-    
+  state = {  };
+  
+  componentDidMount()
+  {
+    axios.get('https://blockchain.info/tobtc?currency=USD&value=500').then((ambilData) => 
+    {  
+      console.log(ambilData); 
 
-  onSeriesInputChange = e =>{
-    this.setState({ masuk:e.target.value});
-    axios.get(`https://blockchain.info/tobtc?currency=USD&value=${e.target.value*14000}`)
-    .then((ambilData) => {  
-      console.log(ambilData);
-      this.setState({
-        hasil: ambilData.data,
+      this.setState(
+        {
+          // Harga (dalam Rupiah) untuk 1 Bitcoin
+          rpforbc1 : (500*14000)/(ambilData.data)
         })
-        
-     })
+    })
   }
-    
-    render() {
-      const{masuk} = this.state;
-      
-     return (
 
-        <div>
-          <Navbar/>
+  klik()
+  {
+   var inputBC = this.refs.input.value ;
+   var output = (inputBC * this.state.rpforbc1);
+  
+   this.setState(
+    {
+      userInput : inputBC,
+      result : output
+    })
+  }
+  render() 
+
+  {
+    return (
+      <div>
         <center>
-          <br/>
-          <h3>Konversi Bitcoin ke Rupiah </h3>
-            <h5>Kurs 1 USD = 14.000 IDR</h5>
-            
-          <br/>
-          <input value = {masuk} type="number" onInput={this.onSeriesInputChange} style={{width:'400px'}}/>
-          <br/>
-          { this.state.masuk ? <h4>BTC {masuk} &nbsp; Rp {this.state.hasil}</h4> :
-          <div>
-           <br/> 
-          <h4>Silakan input nominal Bitcoin</h4>
-          </div>
-           }
+          <h1>Konversi Bitcoin ke Rupiah</h1>
+          <h4>Kurs 1 USD = Rp 14.000</h4>
+          <br />
+          <input ref="input" type="number" onInput={()=>{this.klik();}}/>
+          <h1>BTC {this.state.userInput} = Rp {this.state.result}</h1>
 
+          <br/><br/>
+          <br />
+          <Link to = "/tabelhargabitcoin">Tabel Harga Bitcoin</Link>
+          <br />
+          <Link to = "/konversirupiahkebitcoin">Konversi Rupiah ke Bitcoin</Link>
         </center>
-
-        </div>
-        );
-       }
-     }
-    
-
-export default Rp2;
+      </div>
+  );
+  }
+  } export default Rp2;
