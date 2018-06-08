@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
 
-class Brupiah extends Component {
+class Rp2 extends Component {
 
   state = {
     input:null,
@@ -53,4 +53,4 @@ class Brupiah extends Component {
      }
     
 
-export default Brupiah;
+export default Rp2;

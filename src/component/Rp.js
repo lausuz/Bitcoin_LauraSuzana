@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
 
-class Rupiahb extends Component {
+class Rp extends Component {
 
   state = {
     input:null,
@@ -53,4 +53,4 @@ class Rupiahb extends Component {
      }
     
 
-export default Rupiahb;
+export default Rp;

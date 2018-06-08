@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 
-class Hariini extends Component {
+class Today extends Component {
 
   state = {
     dollaraustraliabeli: "",
@@ -97,4 +97,4 @@ class Hariini extends Component {
      }
     
 
-export default Hariini;
+export default Today;
